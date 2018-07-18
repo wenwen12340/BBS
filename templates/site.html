@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+   <div class="col-md-pull-9 ">
+
+            {% for artical in artical_list %}
+                <div class="articaltitle">
+                    <h3><a href="/{{ username }}/artical/{{ artical.pk}}/">{{ artical.title }}</a></h3>
+                </div>
+                <div>
+                    <span class="media-left"><a href=""><img src="http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=false&word=%E5%A4%B4%E5%83%8F&hs=0&pn=5&spn=0&di=136400471350&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&ie=utf-8&oe=utf-8&cl=2&lm=-1&cs=16550438%2C2220103346&os=2857415060%2C3581768219&simid=4123981771%2C611174897&adpicid=0&lpn=0&ln=30&fr=ala&fm=&sme=&cg=head&bdtype=0&oriquery=%E5%A4%B4%E5%83%8F&objurl=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201609%2F26%2F20160926124027_vxRkt.jpeg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3B17tpwg2_z%26e3Bv54AzdH3Fks52AzdH3F%3Ft1%3Dm9n8cadb9&gsm=0&islist=&querylist=" class="touxiang"></a></span>
+                    <span class="abstract media-right">{{ artical.abstract }}</span>
+                </div>
+                <div class="artical_info pull-right">
+
+                    发布于 <span>{{ artical.create_time|date:"Y-m-d h:i:s" }}</span>
+                    <span class="glyphicon glyphicon-comment"></span><a href="#" >评论({{ artical.comment_count}})</a>&nbsp&nbsp
+                    <span class="glyphicon glyphicon-thumbs-up"></span><a href="#">点赞({{ artical.up_count }})</a>
+
+                </div>
+
+                <hr>
+
+            {% endfor %}
+        </div>
+
+{% endblock %}
+
+
+
+
+
+{##}
+{#   <div class="col-md-pull-9 ">#}
+{##}
+{#            {% for artical in artical_list %}#}
+{#                <div class="articaltitle">#}
+{#                    <h3><a href="#">{{ artical.title }}</a></h3>#}
+{#                </div>#}
+{#                <div>#}
+{#                    <span class="media-left"><a href=""><img src="http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=false&word=%E5%A4%B4%E5%83%8F&hs=0&pn=5&spn=0&di=136400471350&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&ie=utf-8&oe=utf-8&cl=2&lm=-1&cs=16550438%2C2220103346&os=2857415060%2C3581768219&simid=4123981771%2C611174897&adpicid=0&lpn=0&ln=30&fr=ala&fm=&sme=&cg=head&bdtype=0&oriquery=%E5%A4%B4%E5%83%8F&objurl=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201609%2F26%2F20160926124027_vxRkt.jpeg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3B17tpwg2_z%26e3Bv54AzdH3Fks52AzdH3F%3Ft1%3Dm9n8cadb9&gsm=0&islist=&querylist=" class="touxiang"></a></span>#}
+{#                    <span class="abstract media-right">{{ artical.abstract }}</span>#}
+{#                </div>#}
+{#                <div class="artical_info pull-right">#}
+{##}
+{#                    发布于 <span>{{ artical.create_time|date:"Y-m-d h:i:s" }}</span>#}
+{#                    <span class="glyphicon glyphicon-comment"></span><a href="#" >评论({{ artical.comment_count}})</a>&nbsp&nbsp#}
+{#                    <span class="glyphicon glyphicon-thumbs-up"></span><a href="#">点赞({{ artical.up_count }})</a>#}
+{##}
+{#                </div>#}
+{##}
+{#                <hr>#}
+{##}
+{#            {% endfor %}#}
+{#        </div>#}

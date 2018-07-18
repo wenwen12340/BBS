@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% block content %}
+{#      <script src="/static/kindeditor/kindeditor-all.js"></script>#}
+    <div class="col-md-9">
+        <h3>{{ artical.title }}</h3>
+        <hr>
+        {{ artical.content|safe }}
+    <hr>
+    <hr>
+    <div class="clearfix">
+    <div id="div_digg">
+        <div class="diggit action" >
+            <span class="diggnum" id="digg_count">{{ artical.up_count }}</span>
+        </div>
+        <div class="buryit action">
+            <span class="burynum" id="bury_count">{{ artical.down_count }}</span>
+        </div>
+        <div class="hidden" id="yingcang">请先<a href="{% url 'login' %} ">登陆</a></div>
+        <div class="clear"></div>
+        <div class="diggword" id="digg_tips"></div>
+    </div>
+    </div>
+
+    <div id="div_comment">
+        <div>
+            <h3><strong><p>评论列表:</p></strong></h3>
+            <hr>
+            <hr>
+            <div>
+                <ul class="comment_list list-group">
+                     {% for comment in comment_list %}
+                         <li class="list_group_item list-unstyled">
+                           <div>
+                            <a href="#">#{{ forloop.counter }}楼</a>
+                            <span class="small">{{ comment.create_time|date:"Y-m-d h:i:s"  }}</span>
+                            <a href="">{{ comment.user.username }}</a>
+                            <a href="" class="pull-right"><span>回复</span></a>
+                           </div>
+                            <div>
+                                  <p>{{ comment.content }}</p>
+                            </div>
+
+                         </li>
+                         <hr>
+                     {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+        <div>
+            <h3>发表评论</h3>
+            <hr>
+            <form >
+                <div class="comment_user">
+                    <p>
+                        昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled" size="50"
+                                  value={{ request.user.username }}>
+                    </p>
+                </div>
+                <div class="comment_content">
+                    <h3> 评论内容:</h3>
+                    <textarea id="editor_id" class="ckeditor" name="content" style="width:700px;height:600px;">
+                    </textarea>
+                </div>
+                <div class="comment_sub">
+                    <input type="button" class="btn btn-default comment_btn" value="提交评论">
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+        {#富文本编辑器#}
+        <script src="/static/kindeditor/kindeditor-all.js"></script>
+        <script name="">
+            KindEditor.ready(function(K) {
+                window.editor = K.create('#editor_id',{
+                    {#width:'800px' ，     只能变宽不能变窄#}
+                    items:['preview','|','fontsize','source','copy','fontname','bold'
+
+                    ],
+                      resizeType:0,
+                });
+                });
+        </script>
+
+    {% csrf_token %}
+{# 点赞#}
+    <script>
+        $('.action').click(function(){
+
+            if ('{{ request.user.username }}'){
+                var is_up = $(this).hasClass('diggit');
+                console.log(is_up);
+                var _this = $(this).children('span');
+              $.ajax({
+                url:'{% url 'digg' %}' ,
+                type:'post',
+                data:{
+                    artical_id:'{{ artical.id }}',
+                    is_up:is_up,
+                    csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val()
+
+                },
+                  success:function (data) {
+                    console.log(data);
+                      console.log(typeof(data));
+                    if(data.state){
+                        var val=_this.text();
+                        _this.text(parseInt(val)+1)
+                    }else{
+                        var val = data.handle?'你已经推荐过了':'你已经反对过了';
+                        $('#digg_tips').html(val);
+
+                        setTimeout(function () {
+                            $('#digg_tips').html("")
+                        },1000)
+                    }
+
+                  }
+
+            })
+            }else{
+                $('#yingcang').removeClass('hidden');
+                {#location.href = '{% url 'login' %}'#}
+                {#location.href="/login/"#}
+            }
+        })
+    </script>
+{# 评论#}
+        <script>
+            $('.comment_btn').click(function () {
+                {#alert(123);#}
+                {#var pid = "";#}
+                editor.sync();
+                var content = $('#editor_id').val();
+                console.log(content);
+                $.ajax({
+                    url:"{% url 'comment' %}",
+                    type:"post",
+                    data:{
+                        content:content,
+                        artical_id:"{{ artical.id }}",
+                        pid:"",
+                        csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val()
+                    },
+                    success:function(data){
+                        console.log(data);
+                        var timmer = data.timmer;
+                        var content = data.content;
+                        var user = data.user;
+                        {#console.log(content);#}
+                        var $li=`<li class='list-group-iteam'>
+                                <div>
+                                <span class='samll'>${timmer}</span>&nbsp;&nbsp;
+                                <a href=''>${user}</a>
+                                </div>
+                                <div>
+                                <p>${content}</p>
+                                </div>
+                                </li>`;
+                        $(".comment_list").append($li);
+                        $("#editor_id").val("");
+
+                    }
+
+                })
+            })
+
+        </script>
+
+{% endblock %}

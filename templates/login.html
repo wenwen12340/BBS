@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="title">
+    <h2>欢迎登陆博客园</h2>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-lg-offset-4">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    用户名 <input type="text" name="user" class="form-control">
+                </div>
+                <div class="form-group">
+                     密码<input type="password" name="pwd" class="form-control">
+                </div>
+                <div>
+                    <input type="text" name="code" placeholder="验证" />
+                    <img onclick="changeImg(this);" src="/code/" alt="" title="点击更换">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="form-group btn pull-right">
+                </div>
+
+            </form>
+            <script>
+                   function changeImg(ths) {
+                        ths.src = ths.src + '?';
+                    }
+            </script>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

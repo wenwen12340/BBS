@@ -1,0 +1,39 @@
+<div class="left">
+    <div class="panel panel-danger ">
+        <div class="panel-heading">
+            我的标签
+        </div>
+        {% for tag in tag_list %}
+            <div class="panel-body">
+                <p><a href="/{{ username }}/tag/{{ tag.0 }}"> {{ tag.0 }}({{ tag.1 }})</a></p>
+
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">我的分类</h3>
+        </div>
+        {% for category in category_list %}
+            <div class="panel-body">
+                <p><a href="/{{ username }}/category/{{ category.0 }}">{{ category.0 }}({{ category.1 }})</a></p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            我的随笔
+        </div>
+        {% for date in date_list %}
+            <div class="panel-body">
+                <p><a href="/{{ username }}/achrive/{{ date.0 }}/">{{ date.0 }}({{ date.1 }})</a></p>
+
+
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/theme/{{ blog.theme }}">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+     <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="icon" href="//www.jd.com/favicon.ico" mce_href="//www.jd.com/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/artical.css">
+{#    <script src="/static/js/jquery-3.3.1.js"></script>#}
+
+</head>
+<body>
+
+{#<div class="head">#}
+{#     <div class="in_left">#}
+{#      <ul >#}
+{#        <li > <p class="title">{{ blog.title }}</p></li>#}
+{#      </ul>#}
+{#     </div>#}
+{#     <div class="in_right">#}
+{#         <ul >#}
+{#          <li> <h4><a href="{% url 'index' %}" class=" nav" >首页</a></h4></li>#}
+{#        </ul>#}
+{#    </div>#}
+{##}
+{#</div>#}
+<div class="head collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+          <ul class="nav navbar-nav">
+            <li class="active title"><a href="#">{{ blog.title }}</a></li>
+            <li class="nav"><a href="{% url 'index' %}">首页</a></li>
+{#            <li><a href="#">Link</a></li>#}
+          </ul>
+        </div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-3 ">
+            {% load my_tags %}
+
+            {% get_query_data username %}
+
+        </div>
+
+
+
+         <div class="col-md-pull-9 ">
+            {% block content %}
+             {% endblock %}
+
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+{# <script src="/static/kindeditor/kindeditor-all.js"></script>#}
+{# <script src="/static/js/jquery-3.3.1.js"></script>#}
+{# <script src="/static/bootstrap/js/bootstrap.min.js"></script>#}
+</html>

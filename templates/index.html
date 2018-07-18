@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+
+    <style>
+        .touxiang{
+            height: 80px;
+            width: 60px;
+        }
+        .artical_info{
+            margin-top: 10px;
+        }
+        .navbar-brand{
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed"
+              data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">欢迎来到博客园</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">新闻 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">博问</a></li>
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+          {% if request.user.username %}
+              <li><a href="{% url 'logout' %}">退出</a></li>
+              <li><a href="#">{{ request.user.username }}</a></li>
+              <li><a href="{% url 'site' username=request.user.username %}">我的博客</a></li>
+              <li><a href="{% url 'backend' %}">设置</a></li>
+          {% else %}
+
+              <li><a href="{% url 'login' %}">登陆</a></li>
+              <li><a href="#">注册</a></li>
+
+          {% endif %}
+
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                Basic panel example
+            </div>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-body">
+                Basic panel example
+            </div>
+        </div>
+
+        <div class="panel panel-success">
+            <div class="panel-body">
+                Basic panel example
+            </div>
+        </div>
+    </div>
+        <div class="col-md-6">
+            {% for artical in artical_list %}
+                <div class="articaltitle">
+                    <h3><a href=" /{{ artical.user.username }}/artical/{{ artical.id }}">{{ artical.title }}</a></h3>
+                </div>
+                <div>
+                    <span class="media-left"><a href=""><img src="http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=false&word=%E5%A4%B4%E5%83%8F&hs=0&pn=5&spn=0&di=136400471350&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&ie=utf-8&oe=utf-8&cl=2&lm=-1&cs=16550438%2C2220103346&os=2857415060%2C3581768219&simid=4123981771%2C611174897&adpicid=0&lpn=0&ln=30&fr=ala&fm=&sme=&cg=head&bdtype=0&oriquery=%E5%A4%B4%E5%83%8F&objurl=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201609%2F26%2F20160926124027_vxRkt.jpeg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3B17tpwg2_z%26e3Bv54AzdH3Fks52AzdH3F%3Ft1%3Dm9n8cadb9&gsm=0&islist=&querylist=" class="touxiang"></a></span>
+                    <span class="abstract media-right">{{ artical.abstract }}</span>
+                </div>
+                <div class="artical_info">
+                    <span>{{ artical.user.username }}</span>&nbsp
+                    发布于 <span>{{ artical.create_time|date:"Y-m-d h:i:s" }}</span>
+                    <span class="glyphicon glyphicon-comment"></span><a href="#" >评论({{ artical.comment_count}})</a>&nbsp&nbsp
+                    <span class="glyphicon glyphicon-thumbs-up"></span><a href="#">点赞({{ artical.up_count }})</a>
+
+                </div>
+
+                <hr>
+
+            {% endfor %}
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Panel heading without title</div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Panel title</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

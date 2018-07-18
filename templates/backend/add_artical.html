@@ -1,0 +1,58 @@
+{% extends 'backend/base.html' %}
+{% block content %}
+    <form action="" method="post">
+    {% csrf_token %}
+    <div class="add_artical">
+        <div class="alert-success text-center">
+            添加文章
+        </div>
+        <div class="ad_artical_region">
+            <div class="title form-group">
+                <label for=""> 标题</label>
+                <div>
+                    <input type="text" name="title">
+                </div>
+            </div>
+            <div class="content form-group">
+                <label for="">编辑内容</label>
+                <div>
+                    <textarea name="content" id="artical_content" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <div>
+                <ul>
+                    {% for category in category_list %}
+                        <li>{{ category }}<input type="radio" name="category" value="{{ category.id }}"></li>
+                    {% endfor %}
+                </ul>
+                <hr>
+                 <ul>
+                    {% for tag in tags %}
+                        <li>{{ tag.title }}<input type="checkbox" name="'tags" value="{{tag.id }}"></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <input type="submit" class="btn">
+        </div>
+    </div>
+    </form>
+        <script src="/static/kindeditor/kindeditor-all.js"></script>
+        <script name="">
+            KindEditor.ready(function(K) {
+                window.editor = K.create('#artical_content',{
+                    width:600,
+                    height:300,
+                    resizeType:0,
+                    uploadJson:"{% url 'upload' %}",
+                    extraFileUploadParams:{
+                        csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val()
+                        },
+                     filePostName:"upload_img"
+
+                });
+                });
+        </script>
+
+
+
+{% endblock %}
